@@ -11,7 +11,13 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "types": ["jest"]
+    "types": ["jest"],
+    "paths": {
+      "@*": ["./src/*"],
+      "@domain*": ["./src/domain/*"],
+      "@infraestructure*": ["./src/infraestructure/*"],
+      "@ui*": ["./src/ui/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
