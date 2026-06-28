@@ -1,10 +1,9 @@
-import express, {Request, Response} from 'express';
+import { userRouter } from '@ui/user/routes/user-routes';
+import express from 'express';
 
 const api = express();
 
 api.use(express.json());
-api.get('/', (req: Request, res: Response) => {
-  res.status(200).send('Hello world');
-});
+api.use('/authentication', userRouter);
 
 export default api;
