@@ -27,7 +27,7 @@ export async function signupUser(
   }
 }
 
-export async function signinUser(
+export async function loginUser(
   overrides: {
     email?: string;
     password?: string;
