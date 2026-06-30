@@ -1,8 +1,15 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SecurityService } from '@domain/user/services/SecurityService';
+import { environmentService } from '@infraestructure/EnvironmentService';
 
 export class SecurityServiceImplementation implements SecurityService {
+  private readonly JWT_SECRET: string;
+
+  constructor() {
+    this.JWT_SECRET = environmentService.get().JWT_SECRET;
+  }
+
   async hash(password: string): Promise<string> {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -15,11 +22,9 @@ export class SecurityServiceImplementation implements SecurityService {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
   generateJWT(userId: number): string {
-    const JWT_SECRET = process.env.JWT_SECRET;
-    if (!JWT_SECRET) {
-      throw new Error('JWT_SECRET_MISSING');
-    }
-    const token = jwt.sign({ userId }, JWT_SECRET);
+    environmentService.load();
+
+    const token = jwt.sign({ userId }, this.JWT_SECRET);
     return token;
   }
 }

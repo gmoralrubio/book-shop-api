@@ -1,8 +1,9 @@
+import { environmentService } from '@infraestructure/EnvironmentService';
 import api from './api';
-import dotenv from 'dotenv';
-dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+environmentService.load();
+
+const PORT = environmentService.get().PORT;
 
 api.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
