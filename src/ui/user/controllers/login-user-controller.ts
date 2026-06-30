@@ -1,29 +1,27 @@
 import { LoginUserUseCase } from '@domain/user/use-cases/login-user';
 import { SecurityServiceImplementation } from '@infraestructure/user/services/SecurityServiceImplementation';
 import { PrismaUserRepository } from '@infraestructure/user/repositories/PrismaUserRepository';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { userCredentialsValidationSchema } from '@ui/user/user-credentials-validation';
 
-export const loginUserController = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    res.status(400).json({ error: 'EMAIL_AND_PASSWORD_MUST_BE_PROVIDED' });
-    return;
-  }
-
-  const prismaUserRepository = new PrismaUserRepository();
-  const securityService = new SecurityServiceImplementation();
-  const loginUserUseCase = new LoginUserUseCase(
-    prismaUserRepository,
-    securityService
-  );
-
+export const loginUserController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
+    const { email, password } = userCredentialsValidationSchema.parse(req.body);
+
+    const prismaUserRepository = new PrismaUserRepository();
+    const securityService = new SecurityServiceImplementation();
+    const loginUserUseCase = new LoginUserUseCase(
+      prismaUserRepository,
+      securityService
+    );
+
     const token = await loginUserUseCase.execute({ email, password });
     res.status(200).json({ accessToken: token });
   } catch (error) {
-    const msg = error instanceof Error ? error.message : JSON.stringify(error);
-    res.status(500).json({ error: msg });
-    return;
+    next(error);
   }
 };
