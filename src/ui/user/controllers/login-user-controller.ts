@@ -1,5 +1,5 @@
 import { LoginUserUseCase } from '@domain/user/use-cases/login-user';
-import { SecurityServiceImplementation } from '@infraestructure/services/SecurityServiceImplementation';
+import { SecurityServiceImplementation } from '@infraestructure/user/services/SecurityServiceImplementation';
 import { PrismaUserRepository } from '@infraestructure/user/repositories/PrismaUserRepository';
 import { Request, Response } from 'express';
 
