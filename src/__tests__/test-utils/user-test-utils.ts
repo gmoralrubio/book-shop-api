@@ -22,7 +22,7 @@ export async function signupUser(
     });
   if (response.status !== 201) {
     throw new Error(
-      `createUser falló con status ${response.status}: ${JSON.stringify(response.body)}`
+      `createUser failed with status ${response.status}: ${JSON.stringify(response.body)}`
     );
   }
 }
