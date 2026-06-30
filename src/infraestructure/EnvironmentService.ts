@@ -1,5 +1,6 @@
 import z, { ZodError } from 'zod';
 import dotenv from 'dotenv';
+import { ConfigurationError } from '@domain/errors/ConfigurationError';
 
 // Validation schema
 const environmentVariablesValidator = z.object({
@@ -34,7 +35,9 @@ class EnvironmentService {
 
   get(): EnvironmentVariables {
     if (!this.environmentVariables) {
-      throw new Error('Environment variables not loaded. Call .load() first');
+      throw new ConfigurationError(
+        'Environment variables not loaded. Call .load() first'
+      );
     }
     return this.environmentVariables;
   }
