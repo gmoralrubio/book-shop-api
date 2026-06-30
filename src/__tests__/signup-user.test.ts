@@ -27,7 +27,7 @@ describe('POST /authentication/signup', () => {
 
     expect(response.status).toEqual(201);
     expect(response.body).toMatchObject({
-      message: 'USER_CREATED_SUCCESSFULLY',
+      message: 'User created successfully',
     });
 
     const createdUser = await prisma.user.findUnique({
@@ -38,13 +38,15 @@ describe('POST /authentication/signup', () => {
     expect(createdUser).not.toBeNull();
   });
 
-  test('Given a pasword not strong enough, an error is thrown', async () => {
+  test('Given a invalid password, an error is thrown', async () => {
     const response = await request(api).post(ENDPOINT).send({
       email: VALID_EMAIL,
       password: 'corta',
     });
-    expect(response.status).toEqual(500);
-    expect(response.body).toEqual({ error: 'INVALID_CREDENTIALS' });
+    expect(response.status).toEqual(400);
+    expect(response.body).toEqual({
+      error: 'Password does not comply with validation rules',
+    });
   });
 
   test('Given an invalid email, an error is thrown', async () => {
@@ -52,8 +54,20 @@ describe('POST /authentication/signup', () => {
       email: 'invalidemail.com',
       password: VALID_PW,
     });
-    expect(response.status).toEqual(500);
-    expect(response.body).toEqual({ error: 'INVALID_CREDENTIALS' });
+    expect(response.status).toEqual(400);
+    expect(response.body).toEqual({
+      error: 'Email does not comply with validation rules',
+    });
+  });
+
+  test('When password is not given, an error is thrown', async () => {
+    const response = await request(api).post(ENDPOINT).send({
+      email: VALID_EMAIL,
+    });
+    expect(response.status).toEqual(400);
+    expect(response.body).toEqual({
+      error: 'Password is required',
+    });
   });
 
   test('When email is not given, an error is thrown', async () => {
@@ -62,7 +76,7 @@ describe('POST /authentication/signup', () => {
     });
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({
-      error: 'EMAIL_AND_PASSWORD_MUST_BE_PROVIDED',
+      error: 'Email is required',
     });
   });
 
@@ -79,7 +93,9 @@ describe('POST /authentication/signup', () => {
       password: VALID_PW,
     });
 
-    expect(response2.status).toEqual(500);
-    expect(response2.body).toEqual({ error: 'INVALID_CREDENTIALS' });
+    expect(response2.status).toEqual(409);
+    expect(response2.body).toEqual({
+      error: 'An user with same email already exists',
+    });
   });
 });

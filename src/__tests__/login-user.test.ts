@@ -40,8 +40,10 @@ describe('/POST /authentication/login', () => {
       password: 'some-random-pw',
     });
 
-    expect(response.status).toEqual(500);
-    expect(response.body).toMatchObject({ error: 'INVALID_CREDENTIALS' });
+    expect(response.status).toEqual(400);
+    expect(response.body).toMatchObject({
+      error: 'Password does not comply with validation rules',
+    });
     expect(response.body.accessToken).not.toBeDefined();
   });
 
@@ -52,8 +54,10 @@ describe('/POST /authentication/login', () => {
       .post(ENDPOINT)
       .send({ email: VALID_EMAIL, password: 'not-matching-pw' });
 
-    expect(response.status).toEqual(500);
-    expect(response.body).toMatchObject({ error: 'INVALID_CREDENTIALS' });
+    expect(response.status).toEqual(400);
+    expect(response.body).toMatchObject({
+      error: 'Password does not comply with validation rules',
+    });
 
     expect(response.body.accessToken).not.toBeDefined();
   });
@@ -65,7 +69,7 @@ describe('/POST /authentication/login', () => {
 
     expect(response.status).toEqual(400);
     expect(response.body).toMatchObject({
-      error: 'EMAIL_AND_PASSWORD_MUST_BE_PROVIDED',
+      error: 'Email is required',
     });
 
     expect(response.body.accessToken).not.toBeDefined();
@@ -78,7 +82,7 @@ describe('/POST /authentication/login', () => {
 
     expect(response.status).toEqual(400);
     expect(response.body).toMatchObject({
-      error: 'EMAIL_AND_PASSWORD_MUST_BE_PROVIDED',
+      error: 'Password is required',
     });
 
     expect(response.body.accessToken).not.toBeDefined();
