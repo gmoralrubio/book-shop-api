@@ -6,6 +6,11 @@ import {
   VALID_PW,
 } from '@__tests__/test-utils/user-test-utils';
 import api from '../api';
+import { environmentService } from '@infraestructure/EnvironmentService';
+
+beforeAll(() => {
+  environmentService.load();
+});
 
 beforeEach(async () => {
   await prisma.user.deleteMany();
