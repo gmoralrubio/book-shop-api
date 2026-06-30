@@ -1,3 +1,5 @@
+import { BadSyntaxError } from '@domain/errors/BadSyntaxError';
+import { BusinessConflictError } from '@domain/errors/BusinessConflictError';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { SecurityService } from '@domain/user/services/SecurityService';
 import { User } from '@prisma/client';
@@ -22,11 +24,8 @@ export class SignupUserUseCase {
   async execute(input: SignupUserUseCaseInput): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(input.email);
     if (existingUser) {
-      throw new Error('INVALID_CREDENTIALS');
+      throw new BusinessConflictError('An user with same email already exists');
     }
-
-    this.validatePassword(input.password);
-    this.validateEmail(input.email);
 
     const hashedPassword = await this.securityService.hash(input.password);
 
@@ -44,14 +43,16 @@ export class SignupUserUseCase {
     );
 
     if (!passwordRegExp.test(password)) {
-      throw new Error('INVALID_CREDENTIALS');
+      throw new BadSyntaxError(
+        'Password does not comply with validation rules'
+      );
     }
   }
 
   private validateEmail(email: string) {
     const emailRegExp = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
     if (!emailRegExp.test(email)) {
-      throw new Error('INVALID_CREDENTIALS');
+      throw new BadSyntaxError('Email does not comply with validation rules');
     }
   }
 }

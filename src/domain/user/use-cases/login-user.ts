@@ -1,3 +1,5 @@
+import { EntityNotFoundError } from '@domain/errors/EntityNotFoundError';
+import { UnauthorizedError } from '@domain/errors/UnauthorizedError';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { SecurityService } from '@domain/user/services/SecurityService';
 
@@ -18,19 +20,19 @@ export class LoginUserUseCase {
     this.securityService = securityService;
   }
 
-  async execute(params: LoginUserUseCaseInput): Promise<string> {
-    const user = await this.userRepository.findByEmail(params.email);
+  async execute(input: LoginUserUseCaseInput): Promise<string> {
+    const user = await this.userRepository.findByEmail(input.email);
 
     if (!user) {
-      throw new Error('INVALID_CREDENTIALS');
+      throw new EntityNotFoundError('User', input.email);
     }
     const isMatch = await this.securityService.comparePassword(
-      params.password,
+      input.password,
       user.password
     );
 
     if (!isMatch) {
-      throw new Error('INVALID_CREDENTIALS');
+      throw new UnauthorizedError('Wrong password');
     }
 
     const token = this.securityService.generateJWT(user.id);
