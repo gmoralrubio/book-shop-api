@@ -18,7 +18,7 @@ class EnvironmentService {
   load() {
     if (this.environmentVariables) return;
 
-    dotenv.config();
+    dotenv.config({ quiet: true });
 
     try {
       this.environmentVariables = environmentVariablesValidator.parse(
