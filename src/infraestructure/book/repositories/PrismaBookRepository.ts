@@ -1,7 +1,21 @@
 import { Book } from '@domain/book/Book';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
+import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
 import prismaClient from '@infraestructure/prisma-client';
+
+interface PrismaBook {
+  id: number;
+  ownerId: number;
+  title: string;
+  description: string;
+  price: number;
+  author: string;
+  status: 'PUBLISHED' | 'SOLD';
+  soldAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export class PrismaBookRepository implements BookRepository {
   private readonly prisma = prismaClient;
@@ -17,6 +31,31 @@ export class PrismaBookRepository implements BookRepository {
       },
     });
 
+    return this.restore(prismaBook);
+  }
+  async update(params: UpdateBookUseCaseInput): Promise<Book> {
+    const prismaBook = await this.prisma.book.update({
+      where: { id: params.id },
+      data: {
+        title: params.title,
+        description: params.description,
+        price: params.price,
+        author: params.author,
+      },
+    });
+    return this.restore(prismaBook);
+  }
+
+  async findById(id: number): Promise<Book | null> {
+    const prismaBook = await this.prisma.book.findUnique({ where: { id } });
+    if (!prismaBook) {
+      return null;
+    } else {
+      return this.restore(prismaBook);
+    }
+  }
+
+  private restore(prismaBook: PrismaBook): Book {
     return new Book({
       id: prismaBook.id,
       ownerId: prismaBook.ownerId,
