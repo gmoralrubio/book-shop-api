@@ -1,6 +1,6 @@
 import { CreateBookUseCase } from '@domain/book/use-cases/create-book';
-import { PrismaBookRepository } from '@infraestructure/repositories/PrismaBookRepository';
-import { bookQueryParamsValidationSchema } from '@ui/book/validators/book-validator';
+import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { createBookValidationSchema } from '@ui/book/validators/book-validator';
 import { NextFunction, Request, Response } from 'express';
 
 export const createBookController = async (
@@ -10,9 +10,10 @@ export const createBookController = async (
 ) => {
   const prismaBookRepository = new PrismaBookRepository();
   const createBookUseCase = new CreateBookUseCase(prismaBookRepository);
+
   try {
     const { title, description, price, author } =
-      bookQueryParamsValidationSchema.parse(req.body);
+      createBookValidationSchema.parse(req.body);
     const ownerId = req.userId!;
 
     const book = await createBookUseCase.execute({
