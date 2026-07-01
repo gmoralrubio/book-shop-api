@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const userQueryParamsValidationSchema = z.object({
+export const userValidationSchema = z.object({
   email: z.email({
     error: (iss) =>
       iss.input === undefined
