@@ -87,6 +87,9 @@ describe('POST /authentication/signup', () => {
     });
 
     expect(response1.status).toEqual(201);
+    expect(response1.body).toMatchObject({
+      message: 'User created successfully',
+    });
 
     const response2 = await request(api).post(ENDPOINT).send({
       email: VALID_EMAIL,
