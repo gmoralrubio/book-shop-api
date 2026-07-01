@@ -1,7 +1,7 @@
 import api from '../../api';
 import request from 'supertest';
 
-export const VALID_EMAIL = 'some.email@email.com';
+export const VALID_EMAIL = `some.email@email.com`;
 export const VALID_PW = 'ValidPassword1!';
 
 // Crea un usuario a través de la API.
@@ -34,7 +34,7 @@ export async function loginUser(
   } = {}
 ) {
   const response = await request(api)
-    .post('/authentication/signin')
+    .post('/authentication/login')
     .send({
       email: VALID_EMAIL,
       password: VALID_PW,
