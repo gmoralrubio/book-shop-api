@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SecurityService } from '@domain/user/services/SecurityService';
 import { environmentService } from '@infraestructure/EnvironmentService';
+import { JwtPayload } from '@domain/user/types/JwtPayload';
 
 export class SecurityServiceImplementation implements SecurityService {
   private readonly JWT_SECRET: string;
@@ -26,5 +27,14 @@ export class SecurityServiceImplementation implements SecurityService {
 
     const token = jwt.sign({ userId }, this.JWT_SECRET);
     return token;
+  }
+  verifyJWT(token: string): JwtPayload | null {
+    try {
+      const decodedToken = jwt.verify(token, this.JWT_SECRET);
+      return decodedToken as JwtPayload;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      return null;
+    }
   }
 }
