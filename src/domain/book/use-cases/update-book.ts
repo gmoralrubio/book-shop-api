@@ -23,7 +23,7 @@ export class UpdateBookUseCase {
     const product = await this.bookRepository.findById(input.id);
     // Buscar el libro a editar por Id
     if (!product) {
-      throw new EntityNotFoundError('product', input.id);
+      throw new EntityNotFoundError('product', String(input.id));
     }
 
     if (input.ownerId !== product.ownerId) {
