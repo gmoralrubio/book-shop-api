@@ -7,18 +7,19 @@ export const updateBookController = async (
   res: Response,
   next: NextFunction
 ) => {
+  const userId = req.userId!;
+  const id = Number(req.params.id);
+
   const prismaBookRepository = new PrismaBookRepository();
   const updateBookUseCase = new UpdateBookUseCase(prismaBookRepository);
+
   try {
     const { title, description, price, author } =
       updateBookValidationSchema.parse(req.body);
 
-    const ownerId = req.userId!;
-    const id = Number(req.params.id);
-
     const updatedBook = await updateBookUseCase.execute({
       id,
-      ownerId,
+      userId,
       title,
       description,
       price,

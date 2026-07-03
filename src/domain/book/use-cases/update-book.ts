@@ -1,11 +1,11 @@
+import { Book } from '@domain/book/Book';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { EntityNotFoundError } from '@domain/errors/EntityNotFoundError';
 import { ForbiddenOperationError } from '@domain/errors/ForbiddenOperationError';
-import { Book } from '@prisma/client';
 
 export interface UpdateBookUseCaseInput {
   id: number;
-  ownerId: number;
+  userId: number;
   title?: string;
   description?: string;
   price?: number;
@@ -20,13 +20,13 @@ export class UpdateBookUseCase {
   }
 
   async execute(input: UpdateBookUseCaseInput): Promise<Book> {
-    const product = await this.bookRepository.findById(input.id);
-    // Buscar el libro a editar por Id
-    if (!product) {
-      throw new EntityNotFoundError('product', String(input.id));
+    const book = await this.bookRepository.findById(input.id);
+
+    if (!book) {
+      throw new EntityNotFoundError('book', String(input.id));
     }
 
-    if (input.ownerId !== product.ownerId) {
+    if (input.userId !== book.ownerId) {
       throw new ForbiddenOperationError('User must own the book');
     }
 
