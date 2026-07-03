@@ -46,6 +46,10 @@ export class PrismaBookRepository implements BookRepository {
     return this.restore(prismaBook);
   }
 
+  async delete(id: number): Promise<void> {
+    await this.prisma.book.delete({ where: { id } });
+  }
+
   async findById(id: number): Promise<Book | null> {
     const prismaBook = await this.prisma.book.findUnique({ where: { id } });
     if (!prismaBook) {
