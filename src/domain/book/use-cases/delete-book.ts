@@ -28,7 +28,7 @@ export class DeleteBookUseCase {
 
     if (book.status === 'SOLD') {
       throw new BusinessConflictError(
-        `Book status is ${book.status}, can not be deleted`
+        `Book status is ${book.status}, cannot be deleted`
       );
     }
 

@@ -50,12 +50,15 @@ export class PrismaBookRepository implements BookRepository {
     await this.prisma.book.delete({ where: { id } });
   }
 
-  async toggleStatusTo(status: BookStatus, id: number): Promise<void> {
-    await this.prisma.book.update({ where: { id }, data: { status } });
-  }
-
-  async setSoldAt(date: Date, id: number): Promise<void> {
-    await this.prisma.book.update({ where: { id }, data: { soldAt: date } });
+  async findMany(id: number): Promise<Book[] | null> {
+    const prismaBooks = await this.prisma.book.findMany({
+      where: { ownerId: id },
+    });
+    if (!prismaBooks) {
+      return null;
+    } else {
+      return prismaBooks.map((book) => this.restore(book));
+    }
   }
 
   async findById(id: number): Promise<Book | null> {
@@ -65,6 +68,14 @@ export class PrismaBookRepository implements BookRepository {
     } else {
       return this.restore(prismaBook);
     }
+  }
+
+  async toggleStatusTo(status: BookStatus, id: number): Promise<void> {
+    await this.prisma.book.update({ where: { id }, data: { status } });
+  }
+
+  async setSoldAt(date: Date, id: number): Promise<void> {
+    await this.prisma.book.update({ where: { id }, data: { soldAt: date } });
   }
 
   private restore(prismaBook: PrismaBook): Book {
