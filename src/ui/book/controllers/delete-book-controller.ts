@@ -1,5 +1,6 @@
 import { DeleteBookUseCase } from '@domain/book/use-cases/delete-book';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { idParamValidationSchema } from '@ui/book/validators/book-validator';
 import { Request, Response, NextFunction } from 'express';
 export const deleteBookController = async (
   req: Request,
@@ -7,12 +8,13 @@ export const deleteBookController = async (
   next: NextFunction
 ) => {
   const userId = req.userId!;
-  const id = Number(req.params.id);
 
   const prismaBookRepository = new PrismaBookRepository();
   const deleteBookUseCase = new DeleteBookUseCase(prismaBookRepository);
 
   try {
+    const { id } = idParamValidationSchema.parse(req.params);
+
     await deleteBookUseCase.execute({
       id,
       userId,

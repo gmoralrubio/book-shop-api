@@ -1,6 +1,9 @@
 import { UpdateBookUseCase } from '@domain/book/use-cases/update-book';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
-import { updateBookValidationSchema } from '@ui/book/validators/book-validator';
+import {
+  idParamValidationSchema,
+  updateBookValidationSchema,
+} from '@ui/book/validators/book-validator';
 import { Request, Response, NextFunction } from 'express';
 export const updateBookController = async (
   req: Request,
@@ -8,12 +11,13 @@ export const updateBookController = async (
   next: NextFunction
 ) => {
   const userId = req.userId!;
-  const id = Number(req.params.id);
 
   const prismaBookRepository = new PrismaBookRepository();
   const updateBookUseCase = new UpdateBookUseCase(prismaBookRepository);
 
   try {
+    const { id } = idParamValidationSchema.parse(req.params);
+
     const { title, description, price, author } =
       updateBookValidationSchema.parse(req.body);
 

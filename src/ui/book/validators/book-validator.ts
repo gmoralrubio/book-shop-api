@@ -21,3 +21,7 @@ export const updateBookValidationSchema = z.object({
   price: z.number().positive('Price can not be negative').optional(),
   author: z.string().min(3, 'Minimum author length is 3 characters').optional(),
 });
+
+export const idParamValidationSchema = z.object({
+  id: z.coerce.number('Invalid id. Must be a number'),
+});
