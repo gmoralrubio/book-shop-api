@@ -1,4 +1,4 @@
-import { Book } from '@domain/book/Book';
+import { Book, BookStatus } from '@domain/book/Book';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
 import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
@@ -11,7 +11,7 @@ interface PrismaBook {
   description: string;
   price: number;
   author: string;
-  status: 'PUBLISHED' | 'SOLD';
+  status: BookStatus;
   soldAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -48,6 +48,14 @@ export class PrismaBookRepository implements BookRepository {
 
   async delete(id: number): Promise<void> {
     await this.prisma.book.delete({ where: { id } });
+  }
+
+  async toggleStatusTo(status: BookStatus, id: number): Promise<void> {
+    await this.prisma.book.update({ where: { id }, data: { status } });
+  }
+
+  async setSoldAt(date: Date, id: number): Promise<void> {
+    await this.prisma.book.update({ where: { id }, data: { soldAt: date } });
   }
 
   async findById(id: number): Promise<Book | null> {

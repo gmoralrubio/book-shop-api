@@ -1,3 +1,4 @@
+import { buyBookController } from '@ui/book/controllers/buy-book-controller';
 import { createBookController } from '@ui/book/controllers/create-book-controller';
 import { deleteBookController } from '@ui/book/controllers/delete-book-controller';
 import { updateBookController } from '@ui/book/controllers/update-book-controller';
@@ -9,3 +10,4 @@ export const bookRouter = Router();
 bookRouter.post('/', [authenticationMiddleware, createBookController]);
 bookRouter.put('/:id', [authenticationMiddleware, updateBookController]);
 bookRouter.delete('/:id', [authenticationMiddleware, deleteBookController]);
+bookRouter.post('/:id/buy', [authenticationMiddleware, buyBookController]);
