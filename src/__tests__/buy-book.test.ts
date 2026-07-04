@@ -50,16 +50,29 @@ describe('POST /books/:id/buy', () => {
   test('An error with status code 404 is returned if the book doesnt exist', async () => {
     await signupUser(testUserA);
     const token = await loginUser(testUserA);
-    const invalidId = '999';
+    const nonExistingId = '999';
+
+    const response = await request(api)
+      .post(`/books/${nonExistingId}/buy`)
+      .auth(token, { type: 'bearer' });
+
+    expect(response.status).toEqual(404);
+    expect(response.body.error).toEqual(
+      `Entity book not found with id ${nonExistingId}`
+    );
+  });
+
+  test('An error with status code 400 is returned if the id is not valid', async () => {
+    await signupUser(testUserA);
+    const token = await loginUser(testUserA);
+    const invalidId = 'aaa';
 
     const response = await request(api)
       .post(`/books/${invalidId}/buy`)
       .auth(token, { type: 'bearer' });
 
-    expect(response.status).toEqual(404);
-    expect(response.body.error).toEqual(
-      `Entity book not found with id ${invalidId}`
-    );
+    expect(response.status).toEqual(400);
+    expect(response.body.error).toEqual('Invalid id. Must be a number');
   });
 
   test('An error with status code 409 is returned if the book status is "SOLD"', async () => {
