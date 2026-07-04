@@ -5,10 +5,12 @@ export interface PartialBookProps {
   description: string;
   price: number;
   author: string;
-  status: 'PUBLISHED' | 'SOLD';
+  status: BookStatus;
   ownerId: number;
   soldAt: Date | null;
 }
+
+export type BookStatus = 'PUBLISHED' | 'SOLD';
 
 type BookProps = PartialBookProps & EntityProps;
 
@@ -17,7 +19,7 @@ export class Book extends Entity {
   readonly description: string;
   readonly price: number;
   readonly author: string;
-  readonly status: 'PUBLISHED' | 'SOLD';
+  readonly status: BookStatus;
   readonly ownerId: number;
   readonly soldAt: Date | null;
 
