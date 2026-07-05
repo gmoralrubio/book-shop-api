@@ -22,6 +22,16 @@ export const updateBookValidationSchema = z.object({
   author: z.string().min(3, 'Minimum author length is 3 characters').optional(),
 });
 
+export const findBookValidationSchema = z.object({
+  page: z.coerce.number('Invalid page. Must be a number').positive().default(1),
+  limit: z.coerce
+    .number('Invalid limit. Must be a number')
+    .positive()
+    .max(100)
+    .default(10),
+  search: z.string().min(3).optional(),
+});
+
 export const idParamValidationSchema = z.object({
   id: z.coerce.number('Invalid id. Must be a number'),
 });
