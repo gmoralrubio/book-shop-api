@@ -10,7 +10,9 @@
     "prettier": "prettier --check src/",
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand",
-    "prisma:sync": "npx prisma migrate dev"
+    "prisma:sync": "npx prisma migrate dev",
+    "prisma:seed": "npx prisma db seed",
+    "prisma:reset": "npx prisma migrate reset"
   },
   "keywords": [],
   "author": "",
