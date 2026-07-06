@@ -1,4 +1,3 @@
-import { BadSyntaxError } from '@domain/errors/BadSyntaxError';
 import { BusinessConflictError } from '@domain/errors/BusinessConflictError';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { SecurityService } from '@domain/user/services/SecurityService';
@@ -35,24 +34,5 @@ export class SignupUserUseCase {
     });
 
     return user;
-  }
-
-  private validatePassword(password: string) {
-    const passwordRegExp = new RegExp(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,20}$/
-    );
-
-    if (!passwordRegExp.test(password)) {
-      throw new BadSyntaxError(
-        'Password does not comply with validation rules'
-      );
-    }
-  }
-
-  private validateEmail(email: string) {
-    const emailRegExp = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-    if (!emailRegExp.test(email)) {
-      throw new BadSyntaxError('Email does not comply with validation rules');
-    }
   }
 }
