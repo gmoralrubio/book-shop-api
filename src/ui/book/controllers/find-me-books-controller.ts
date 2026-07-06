@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
-import { FindBooksMeUseCase } from '@domain/book/use-cases/find-books';
+import { FindBooksUseCase } from '@domain/book/use-cases/find-books';
 import { findBookValidationSchema } from '@ui/book/validators/book-validator';
 import { PaginatedResponse } from '@ui/shared/types/PaginatedResponse';
 import { Book } from '@domain/book/Book';
@@ -10,7 +10,7 @@ export const findMeBooksController = async (
   next: NextFunction
 ) => {
   const prismaBookRepository = new PrismaBookRepository();
-  const findBooksUseCase = new FindBooksMeUseCase(prismaBookRepository);
+  const findBooksUseCase = new FindBooksUseCase(prismaBookRepository);
   const userId = req.userId;
 
   try {
