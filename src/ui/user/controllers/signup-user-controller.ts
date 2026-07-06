@@ -9,15 +9,15 @@ export const signupUserController = async (
   res: Response,
   next: NextFunction
 ) => {
+  const prismaUserRepository = new PrismaUserRepository();
+  const securityService = new SecurityServiceImplementation();
+  const signupUserUserCase = new SignupUserUseCase(
+    prismaUserRepository,
+    securityService
+  );
   try {
     const { email, password } = userValidationSchema.parse(req.body);
 
-    const prismaUserRepository = new PrismaUserRepository();
-    const securityService = new SecurityServiceImplementation();
-    const signupUserUserCase = new SignupUserUseCase(
-      prismaUserRepository,
-      securityService
-    );
     await signupUserUserCase.execute({ email, password });
     res.status(201).send({ message: 'User created successfully' });
   } catch (error) {
