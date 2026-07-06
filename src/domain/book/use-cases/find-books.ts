@@ -1,27 +1,21 @@
+import { FindBooksResponse } from '@domain/book/types/FindBooksResponse';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { Pagination } from '@domain/shared/Pagination';
-import { Book } from '@prisma/client';
 
-interface BookFilterQuery {
+interface BookMeFilterQuery {
   userId?: number;
 }
-export interface FindBooksUseCaseResponse {
-  books: Book[];
-  total: number;
-}
 
-export type FindBooksUseCaseInput = Pagination & BookFilterQuery;
+export type FindBooksMeUseCaseInput = Pagination & BookMeFilterQuery;
 
-export class FindBooksUseCase {
+export class FindBooksMeUseCase {
   readonly bookRepository: BookRepository;
 
   constructor(bookRepository: BookRepository) {
     this.bookRepository = bookRepository;
   }
 
-  async execute(
-    criteria: FindBooksUseCaseInput
-  ): Promise<FindBooksUseCaseResponse> {
+  async execute(criteria: FindBooksMeUseCaseInput): Promise<FindBooksResponse> {
     const { books, total } = await this.bookRepository.findMany(criteria);
     return {
       books,

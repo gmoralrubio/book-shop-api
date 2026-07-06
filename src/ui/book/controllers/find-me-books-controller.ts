@@ -1,18 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
-import { FindBooksUseCase } from '@domain/book/use-cases/find-books';
+import { FindBooksMeUseCase } from '@domain/book/use-cases/find-books';
 import { findBookValidationSchema } from '@ui/book/validators/book-validator';
 import { PaginatedResponse } from '@ui/shared/types/PaginatedResponse';
 import { Book } from '@domain/book/Book';
-export const findBooksController = async (
+export const findMeBooksController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const prismaBookRepository = new PrismaBookRepository();
-  const findBooksUseCase = new FindBooksUseCase(prismaBookRepository);
-
-  const userId = req.userId!;
+  const findBooksUseCase = new FindBooksMeUseCase(prismaBookRepository);
+  const userId = req.userId;
 
   try {
     const { page, limit } = findBookValidationSchema.parse(req.query);

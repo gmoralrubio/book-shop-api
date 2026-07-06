@@ -1,10 +1,8 @@
 import { Book, BookStatus } from '@domain/book/Book';
+import { FindBooksResponse } from '@domain/book/types/FindBooksResponse';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
-import {
-  FindBooksUseCaseInput,
-  FindBooksUseCaseResponse,
-} from '@domain/book/use-cases/find-books';
+import { FindBooksMeUseCaseInput } from '@domain/book/use-cases/find-books';
 import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
 import prismaClient from '@infraestructure/prisma-client';
 
@@ -55,8 +53,8 @@ export class PrismaBookRepository implements BookRepository {
   }
 
   async findMany(
-    criteria: FindBooksUseCaseInput
-  ): Promise<FindBooksUseCaseResponse> {
+    criteria: FindBooksMeUseCaseInput
+  ): Promise<FindBooksResponse> {
     const { page, limit, userId } = criteria;
 
     const [booksPrisma, booksCount] = await Promise.all([
