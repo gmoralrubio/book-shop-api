@@ -2,7 +2,7 @@ import { Book, BookStatus } from '@domain/book/Book';
 import { FindBooksResponse } from '@domain/book/types/FindBooksResponse';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
-import { FindBooksMeUseCaseInput } from '@domain/book/use-cases/find-books';
+import { FindBooksUseCaseInput } from '@domain/book/use-cases/find-books';
 import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
 import prismaClient from '@infraestructure/prisma-client';
 
@@ -52,18 +52,35 @@ export class PrismaBookRepository implements BookRepository {
     await this.prisma.book.delete({ where: { id } });
   }
 
-  async findMany(
-    criteria: FindBooksMeUseCaseInput
-  ): Promise<FindBooksResponse> {
-    const { page, limit, userId } = criteria;
+  async findMany(criteria: FindBooksUseCaseInput): Promise<FindBooksResponse> {
+    const { page, limit } = criteria;
+
+    const where: Record<string, unknown> = {};
+
+    if (criteria.search) {
+      where.OR = [
+        { title: { contains: criteria.search, mode: 'insensitive' as const } },
+        { author: { contains: criteria.search, mode: 'insensitive' as const } },
+      ];
+    }
+
+    if (criteria.userId) {
+      where.ownerId = criteria.userId;
+    }
+
+    if (criteria.status) {
+      where.status = criteria.status;
+    }
 
     const [booksPrisma, booksCount] = await Promise.all([
       await this.prisma.book.findMany({
-        where: { ownerId: userId },
+        where,
         skip: (page - 1) * limit,
         take: limit,
       }),
-      this.prisma.book.count({ where: { ownerId: userId } }),
+      this.prisma.book.count({
+        where,
+      }),
     ]);
 
     const books = booksPrisma.map((book) => this.restore(book));
