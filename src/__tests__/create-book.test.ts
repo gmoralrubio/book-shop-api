@@ -4,6 +4,7 @@ import prismaClient from '@infraestructure/shared/prisma-client';
 import { loginUser, signupUser } from '@__tests__/test-utils/user-test-utils';
 import api from '../api';
 import { environmentService } from '@infraestructure/EnvironmentService';
+import { TEST_BOOK } from '@__tests__/test-utils/book-test-utils';
 
 beforeAll(() => {
   environmentService.load();
@@ -20,13 +21,6 @@ afterAll(async () => {
 
 describe('/POST /books', () => {
   const ENDPOINT = '/books';
-  const VALID_BOOK = {
-    title: 'Test title',
-    description:
-      'Test description, test description test description test description',
-    price: 20,
-    author: 'Test author',
-  };
 
   test('Given valid data a new book is created', async () => {
     await signupUser();
@@ -35,10 +29,10 @@ describe('/POST /books', () => {
     const response = await request(api)
       .post(ENDPOINT)
       .auth(token, { type: 'bearer' })
-      .send(VALID_BOOK);
+      .send(TEST_BOOK);
 
     expect(response.status).toEqual(201);
 
-    expect(response.body.title).toEqual(VALID_BOOK.title);
+    expect(response.body.title).toEqual(TEST_BOOK.title);
   });
 });
