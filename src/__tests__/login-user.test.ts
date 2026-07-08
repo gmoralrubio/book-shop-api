@@ -13,6 +13,7 @@ beforeAll(() => {
 });
 
 beforeEach(async () => {
+  await prismaClient.book.deleteMany();
   await prismaClient.user.deleteMany();
 });
 
