@@ -1,6 +1,6 @@
 import request from 'supertest';
 import api from '../api';
-import { prisma } from './test-utils/prisma-client';
+import prismaClient from '@infraestructure/shared/prisma-client';
 import { VALID_EMAIL, VALID_PW } from '@__tests__/test-utils/user-test-utils';
 import { environmentService } from '@infraestructure/EnvironmentService';
 
@@ -9,12 +9,12 @@ beforeAll(() => {
 });
 
 beforeEach(async () => {
-  await prisma.book.deleteMany();
-  await prisma.user.deleteMany();
+  await prismaClient.book.deleteMany();
+  await prismaClient.user.deleteMany();
 });
 
 afterAll(async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 });
 
 describe('POST /authentication/signup', () => {
@@ -31,7 +31,7 @@ describe('POST /authentication/signup', () => {
       message: 'User created successfully',
     });
 
-    const createdUser = await prisma.user.findUnique({
+    const createdUser = await prismaClient.user.findUnique({
       where: {
         email: VALID_EMAIL,
       },

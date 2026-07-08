@@ -4,7 +4,7 @@ import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
 import { FindBooksUseCaseInput } from '@domain/book/use-cases/find-books';
 import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
-import prismaClient from '@infraestructure/prisma-client';
+import prismaClient from '@infraestructure/shared/prisma-client';
 
 interface PrismaBook {
   id: number;

@@ -1,7 +1,7 @@
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { SignupUserUseCaseInput } from '@domain/user/use-cases/signup-user';
 import { User } from '@domain/user/User';
-import prismaClient from '@infraestructure/prisma-client';
+import prismaClient from '@infraestructure/shared/prisma-client';
 
 interface PrismaUser {
   id: number;

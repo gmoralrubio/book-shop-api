@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { prisma } from '@__tests__/test-utils/prisma-client';
+import prismaClient from '@infraestructure/shared/prisma-client';
 import {
   signupUser,
   VALID_EMAIL,
@@ -13,11 +13,11 @@ beforeAll(() => {
 });
 
 beforeEach(async () => {
-  await prisma.user.deleteMany();
+  await prismaClient.user.deleteMany();
 });
 
 afterAll(async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 });
 
 describe('/POST /authentication/login', () => {
