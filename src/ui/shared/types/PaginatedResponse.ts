@@ -2,7 +2,14 @@ export interface PaginatedResponse<T> {
   data: T[];
   meta: {
     page: number;
-    limit: number;
-    total: number;
+    pages: number;
+    per_page: number;
+    total_items: number;
+    urls: {
+      first: string;
+      prev: string;
+      next: string;
+      last: string;
+    };
   };
 }

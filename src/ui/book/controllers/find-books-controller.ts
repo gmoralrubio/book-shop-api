@@ -11,7 +11,6 @@ export const findBooksController = async (
 ) => {
   const prismaBookRepository = new PrismaBookRepository();
   const findBooksUseCase = new FindBooksUseCase(prismaBookRepository);
-
   try {
     const { page, limit, search } = findBookValidationSchema.parse(req.query);
     const { books, total } = await findBooksUseCase.execute({
@@ -21,12 +20,24 @@ export const findBooksController = async (
       search,
     });
 
+    const url = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
+    const pages = Math.ceil(total / limit);
+    const prevPage = page === 1 ? page : page - 1;
+    const nextPage = page === pages ? pages : page + 1;
+
     const response: PaginatedResponse<Book> = {
       data: books,
       meta: {
-        limit,
         page,
-        total,
+        pages,
+        total_items: total,
+        per_page: limit,
+        urls: {
+          first: `${url}?page=1&limit=${limit}`,
+          prev: `${url}?page=${prevPage}&limit=${limit}`,
+          next: `${url}?page=${nextPage}&limit=${limit}`,
+          last: `${url}?page=${pages}&limit=${limit}`,
+        },
       },
     };
 
