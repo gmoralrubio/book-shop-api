@@ -1,6 +1,7 @@
 import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { BusinessConflictError } from '@domain/errors/BusinessConflictError';
 import { EntityNotFoundError } from '@domain/errors/EntityNotFoundError';
+import { QueueService } from '@domain/shared/QueueService';
 
 interface BuyBookUseCaseInput {
   id: number;
@@ -9,9 +10,11 @@ interface BuyBookUseCaseInput {
 
 export class BuyBookUseCase {
   readonly bookRepository: BookRepository;
+  readonly queueService: QueueService;
 
-  constructor(bookRepository: BookRepository) {
+  constructor(bookRepository: BookRepository, queueService: QueueService) {
     this.bookRepository = bookRepository;
+    this.queueService = queueService;
   }
 
   async execute(input: BuyBookUseCaseInput) {
@@ -37,6 +40,11 @@ export class BuyBookUseCase {
     await this.bookRepository.setSoldAt(now, input.id);
 
     const soldBook = await this.bookRepository.findById(input.id);
+
+    this.queueService.sendSoldBookEmail({
+      ownerId: book.ownerId.toString(),
+      title: book.title,
+    });
 
     return soldBook;
 
