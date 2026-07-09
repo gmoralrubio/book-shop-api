@@ -23,5 +23,20 @@ services:
     depends_on:
       - postgres
 
+  redis:
+    image: redis:7
+    container_name: bookshop_redis
+    ports:
+      - '6379:6379'
+    restart: always
+
+  maildev:
+    image: maildev/maildev
+    container_name: bookshop_maildev
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    restart: always
+
 volumes:
   postgres_data:
