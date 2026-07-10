@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
 import { FindBooksUseCase } from '@domain/book/use-cases/find-books';
 import { findBookValidationSchema } from '@ui/book/validators/book-validator';
-import { PaginatedResponse } from '@ui/shared/types/PaginatedResponse';
-import { Book } from '@domain/book/Book';
+import { buildPaginatedResponse } from '@ui/shared/presenters/paginated-response';
 export const findMeBooksController = async (
   req: Request,
   res: Response,
@@ -21,14 +20,15 @@ export const findMeBooksController = async (
       limit,
     });
 
-    const response: PaginatedResponse<Book> = {
+    const url = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
+
+    const response = buildPaginatedResponse({
       data: books,
-      meta: {
-        limit,
-        page,
-        total,
-      },
-    };
+      total,
+      page,
+      limit,
+      url,
+    });
 
     res.status(200).json(response);
   } catch (error) {

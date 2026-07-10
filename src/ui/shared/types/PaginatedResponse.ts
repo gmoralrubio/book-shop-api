@@ -13,3 +13,11 @@ export interface PaginatedResponse<T> {
     };
   };
 }
+
+export interface PaginatedResponseParams<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  url: string;
+}
