@@ -1,5 +1,5 @@
 export interface SoldBookEmailParams {
-  ownerId: string;
+  ownerId: number;
   title: string;
 }
 
