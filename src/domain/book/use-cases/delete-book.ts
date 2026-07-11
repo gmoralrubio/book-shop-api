@@ -16,7 +16,7 @@ export class DeleteBookUseCase {
   }
 
   async execute(input: DeleteBookUseCaseInput) {
-    const book = await this.bookRepository.findBy({ id: input.id });
+    const book = await this.bookRepository.findById(input.id);
 
     if (!book) {
       throw new EntityNotFoundError('Book', String(input.id));

@@ -18,7 +18,7 @@ export class BuyBookUseCase {
   }
 
   async execute(input: BuyBookUseCaseInput) {
-    const book = await this.bookRepository.findBy({ id: input.id });
+    const book = await this.bookRepository.findById(input.id);
 
     if (!book) {
       throw new EntityNotFoundError('book', String(input.id));
@@ -39,7 +39,7 @@ export class BuyBookUseCase {
     await this.bookRepository.toggleStatusTo('SOLD', input.id);
     await this.bookRepository.setSoldAt(now, input.id);
 
-    const soldBook = await this.bookRepository.findBy({ id: input.id });
+    const soldBook = await this.bookRepository.findById(input.id);
 
     this.queueService.sendSoldBookEmail({
       ownerId: book.ownerId,
