@@ -5,7 +5,11 @@ import { Queue } from 'bullmq';
 export class BullQueueService implements QueueService {
   private readonly soldBookEmailQueue: Queue;
   constructor() {
-    this.soldBookEmailQueue = new Queue('sold-book-email', {
+    this.soldBookEmailQueue = this.createQueue('sold-book-email');
+  }
+
+  private createQueue(name: string) {
+    return new Queue(name, {
       connection: BullQueueService.getRedisConnection(),
       defaultJobOptions: {
         attempts: 3,
