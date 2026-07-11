@@ -13,5 +13,7 @@ api.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
-const soldBookEmailWorker = new SoldBookEmailWorker();
-soldBookEmailWorker.run();
+const emailService = new NodemailerEmailService();
+const userRepository = new PrismaUserRepository();
+
+new SoldBookEmailWorker(emailService, userRepository);
