@@ -5,6 +5,7 @@ import { CreateBookUseCaseInput } from '@domain/book/use-cases/create-book';
 import { FindBooksUseCaseInput } from '@domain/book/use-cases/find-books';
 import { UpdateBookUseCaseInput } from '@domain/book/use-cases/update-book';
 import prismaClient from '@infraestructure/shared/prisma-client';
+import { FindBookByParams } from '@domain/book/types/FindBookByParams';
 
 interface PrismaBook {
   id: number;
@@ -91,8 +92,8 @@ export class PrismaBookRepository implements BookRepository {
     };
   }
 
-  async findById(id: number): Promise<Book | null> {
-    const prismaBook = await this.prisma.book.findUnique({ where: { id } });
+  async findBy(params: FindBookByParams): Promise<Book | null> {
+    const prismaBook = await this.prisma.book.findFirst({ where: params });
     if (!prismaBook) {
       return null;
     } else {

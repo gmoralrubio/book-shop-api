@@ -20,7 +20,7 @@ export class UpdateBookUseCase {
   }
 
   async execute(input: UpdateBookUseCaseInput): Promise<Book> {
-    const book = await this.bookRepository.findById(input.id);
+    const book = await this.bookRepository.findBy({ id: input.id });
 
     if (!book) {
       throw new EntityNotFoundError('book', String(input.id));
