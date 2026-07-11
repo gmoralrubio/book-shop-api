@@ -2,8 +2,8 @@ import { createBook } from '@__tests__/test-utils/book-test-utils';
 import prismaClient from '@infraestructure/shared/prisma-client';
 import { loginUser, signupUser } from '@__tests__/test-utils/user-test-utils';
 import api from '../api';
-import { environmentService } from '@infraestructure/EnvironmentService';
 import request from 'supertest';
+import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
 
 beforeAll(() => {
   environmentService.load();

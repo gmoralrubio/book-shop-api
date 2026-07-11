@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { EmailService, SendEmailParams } from '@domain/shared/EmailService';
-import { environmentService } from '@infraestructure/EnvironmentService';
+import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
 
 export class NodemailerEmailService implements EmailService {
   private readonly transporter: nodemailer.Transporter;

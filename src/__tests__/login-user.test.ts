@@ -6,7 +6,7 @@ import {
   VALID_PW,
 } from '@__tests__/test-utils/user-test-utils';
 import api from '../api';
-import { environmentService } from '@infraestructure/EnvironmentService';
+import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
 
 beforeAll(() => {
   environmentService.load();

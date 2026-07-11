@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SecurityService } from '@domain/user/services/SecurityService';
-import { environmentService } from '@infraestructure/EnvironmentService';
 import { JwtPayload } from '@domain/user/types/JwtPayload';
+import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
 
 export class SecurityServiceImplementation implements SecurityService {
   private readonly JWT_SECRET: string;

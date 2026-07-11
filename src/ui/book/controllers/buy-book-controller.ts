@@ -1,6 +1,6 @@
 import { BuyBookUseCase } from '@domain/book/use-cases/buy-book';
 import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
-import { BullQueueService } from '@infraestructure/shared/BullQueueService';
+import { BullQueueService } from '@infraestructure/shared/services/BullQueueService';
 import { idParamValidationSchema } from '@ui/book/validators/book-validator';
 import { Request, Response, NextFunction } from 'express';
 

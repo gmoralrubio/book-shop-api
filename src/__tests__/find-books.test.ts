@@ -1,11 +1,11 @@
 import prismaClient from '@infraestructure/shared/prisma-client';
-import { environmentService } from '@infraestructure/EnvironmentService';
 import request from 'supertest';
 import api from '../api';
 import { seedDB } from '../utils/seed-utils';
 import { signupUser, loginUser } from '@__tests__/test-utils/user-test-utils';
 import { createBook } from '@__tests__/test-utils/book-test-utils';
 import { Book } from '@domain/book/Book';
+import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
 
 beforeAll(() => {
   environmentService.load();
