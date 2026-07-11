@@ -8,6 +8,9 @@ export abstract class BullWorker<TJobData> {
     this.worker = new Worker(queueName, (job) => this.processJob(job), {
       connection: BullQueueService.getRedisConnection(),
     });
+    this.worker.on('failed', (job, err) => {
+      console.error(`Job ${job?.id} failed: ${err.message}`);
+    });
   }
 
   abstract processJob(job: Job<TJobData>): Promise<void>;
