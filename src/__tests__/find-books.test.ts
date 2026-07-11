@@ -31,9 +31,11 @@ describe('GET /books', () => {
     expect(response.status).toEqual(200);
     expect(response.body).toHaveProperty('data');
     expect(response.body).toHaveProperty('meta');
-    expect(response.body.meta).toHaveProperty('limit');
     expect(response.body.meta).toHaveProperty('page');
-    expect(response.body.meta).toHaveProperty('total');
+    expect(response.body.meta).toHaveProperty('pages');
+    expect(response.body.meta).toHaveProperty('total_items');
+    expect(response.body.meta).toHaveProperty('per_page');
+    expect(response.body.meta).toHaveProperty('urls');
   });
 
   test('Given a partial search param for an existing title it returns all matching books', async () => {
