@@ -4,8 +4,10 @@ import { Queue } from 'bullmq';
 
 export class BullQueueService implements QueueService {
   private readonly soldBookEmailQueue: Queue;
+  private readonly priceReviewCronQueue: Queue;
   constructor() {
     this.soldBookEmailQueue = this.createQueue('sold-book-email');
+    this.priceReviewCronQueue = this.createQueue('price-review-email-cron');
   }
 
   private createQueue(name: string) {
@@ -34,5 +36,16 @@ export class BullQueueService implements QueueService {
 
   async sendSoldBookEmail(params: SoldBookEmailParams): Promise<void> {
     await this.soldBookEmailQueue.add('sold-book-email-job', params);
+  }
+
+  async priceReviewCron(): Promise<void> {
+    await this.priceReviewCronQueue.upsertJobScheduler(
+      'price-review-email-cron-job',
+      // At 08:00 on Monday
+      { pattern: '0 8 * * 1' },
+      {
+        name: 'price-review-email-job',
+      }
+    );
   }
 }
