@@ -21,7 +21,7 @@ export class LoginUserUseCase {
   }
 
   async execute(input: LoginUserUseCaseInput): Promise<string> {
-    const user = await this.userRepository.findByEmail(input.email);
+    const user = await this.userRepository.findBy({ email: input.email });
 
     if (!user) {
       throw new EntityNotFoundError('User', input.email);

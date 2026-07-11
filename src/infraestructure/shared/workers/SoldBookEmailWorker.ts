@@ -15,7 +15,7 @@ export class SoldBookEmailWorker extends BullWorker<SoldBookEmailParams> {
   }
 
   processJob = async (job: Job<SoldBookEmailParams>) => {
-    const user = await this.userRepository.findById(job.data.ownerId);
+    const user = await this.userRepository.findBy({ id: job.data.ownerId });
 
     if (!user) {
       throw new Error(

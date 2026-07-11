@@ -21,7 +21,9 @@ export class SignupUserUseCase {
   }
 
   async execute(input: SignupUserUseCaseInput): Promise<User> {
-    const existingUser = await this.userRepository.findByEmail(input.email);
+    const existingUser = await this.userRepository.findBy({
+      email: input.email,
+    });
     if (existingUser) {
       throw new BusinessConflictError('An user with same email already exists');
     }

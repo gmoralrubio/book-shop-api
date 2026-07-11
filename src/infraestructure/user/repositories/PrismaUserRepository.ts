@@ -1,4 +1,5 @@
 import { UserRepository } from '@domain/user/repositories/UserRepository';
+import { FindUserByParams } from '@domain/user/types/FindUserByParams';
 import { SignupUserUseCaseInput } from '@domain/user/use-cases/signup-user';
 import { User } from '@domain/user/User';
 import prismaClient from '@infraestructure/shared/prisma-client';
@@ -14,22 +15,15 @@ interface PrismaUser {
 export class PrismaUserRepository implements UserRepository {
   private readonly prisma = prismaClient;
 
-  async findByEmail(email: string): Promise<User | null> {
-    const prismaUser = await this.prisma.user.findUnique({ where: { email } });
+  async findBy(params: FindUserByParams): Promise<User | null> {
+    const prismaUser = await this.prisma.user.findFirst({ where: params });
     if (!prismaUser) {
       return null;
     } else {
       return this.restore(prismaUser);
     }
   }
-  async findById(id: number): Promise<User | null> {
-    const prismaUser = await this.prisma.user.findUnique({ where: { id } });
-    if (!prismaUser) {
-      return null;
-    } else {
-      return this.restore(prismaUser);
-    }
-  }
+
   async signup(params: SignupUserUseCaseInput): Promise<User> {
     const user = await this.prisma.user.create({
       data: {
