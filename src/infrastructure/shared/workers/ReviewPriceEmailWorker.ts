@@ -40,7 +40,9 @@ export class ReviewPriceEmailWorker extends BullWorker<void> {
           message: `The book "${book.title}" (id: ${book.id}) has been published for over 7 days. Consider a price reduction.`,
         });
       } catch (error) {
-        console.error(`Error sending review email for book ${book.id}: ${error}`);
+        console.error(
+          `Error sending review email for book ${book.id}: ${error}`
+        );
       }
     }
   };

@@ -1,7 +1,4 @@
-import {
-  QueueService,
-  SoldBookEmailParams,
-} from '@domain/shared/QueueService';
+import { QueueService, SoldBookEmailParams } from '@domain/shared/QueueService';
 import { environmentService } from '@infrastructure/shared/services/EnvironmentService';
 import { Queue } from 'bullmq';
 
