@@ -1,5 +1,4 @@
 import { BookRepository } from '@domain/book/repositories/BookRepository';
-import { BusinessConflictError } from '@domain/errors/BusinessConflictError';
 import { EntityNotFoundError } from '@domain/errors/EntityNotFoundError';
 import { EmailService } from '@domain/shared/EmailService';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
@@ -24,9 +23,7 @@ export class ReviewPriceUseCase {
     const books = await this.bookRepository.findPublishedBefore(sevenDaysAgo);
 
     if (!books) {
-      throw new BusinessConflictError(
-        `No books founded published before ${sevenDaysAgo}`
-      );
+      return;
     }
 
     await Promise.allSettled(
