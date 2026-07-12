@@ -5,11 +5,11 @@ export const createBookValidationSchema = z.object({
     .string('Title is required')
     .min(3, 'Minimum title length is 3 characters'),
   description: z
-    .string('Description si required')
+    .string('Description is required')
     .min(15, 'Minimum description length is 15 characters'),
   price: z.number('Price is required').positive('Price can not be negative'),
   author: z
-    .string('Author si required')
+    .string('Author is required')
     .min(3, 'Minimum author length is 3 characters'),
 });
 export const updateBookValidationSchema = z.object({
