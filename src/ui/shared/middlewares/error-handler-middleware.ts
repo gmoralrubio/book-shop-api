@@ -18,31 +18,23 @@ export const errorHandlerMiddleware = (
 ) => {
   if (error instanceof BadSyntaxError) {
     res.status(400).json({ error: error.message });
-  }
-
-  if (error instanceof UnauthorizedError) {
+  } else if (error instanceof UnauthorizedError) {
     res.status(401).json({ error: error.message });
-  }
-
-  if (error instanceof ForbiddenOperationError) {
+  } else if (error instanceof ForbiddenOperationError) {
     res.status(403).json({ error: error.message });
-  }
-
-  if (error instanceof EntityNotFoundError) {
+  } else if (error instanceof EntityNotFoundError) {
     res.status(404).json({ error: error.message });
-  }
-
-  if (error instanceof BusinessConflictError) {
+  } else if (error instanceof BusinessConflictError) {
     res.status(409).json({ error: error.message });
-  }
-
-  if (error instanceof ConfigurationError) {
+  } else if (error instanceof ConfigurationError) {
     res.status(500).json({ error: error.message });
-  }
-
-  if (error instanceof ZodError) {
+  } else if (error instanceof ZodError) {
     res.status(400).json({
       error: error.issues[0].message,
+    });
+  } else {
+    res.status(500).json({
+      error: JSON.stringify(error),
     });
   }
 };
