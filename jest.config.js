@@ -11,7 +11,7 @@ module.exports = {
   moduleNameMapper: {
     '^@__tests__(.*)$': '<rootDir>/src/__tests__$1',
     '^@domain(.*)$': '<rootDir>/src/domain$1',
-    '^@infraestructure(.*)$': '<rootDir>/src/infraestructure$1',
+    '^@infrastructure(.*)$': '<rootDir>/src/infrastructure$1',
     '^@ui(.*)$': '<rootDir>/src/ui$1',
   },
 };

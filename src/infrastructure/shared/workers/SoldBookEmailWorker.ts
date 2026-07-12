@@ -1,6 +1,6 @@
 import { Job } from 'bullmq';
 import { SoldBookEmailParams } from '@domain/shared/QueueService';
-import { BullWorker } from '@infraestructure/shared/workers/BullWorker';
+import { BullWorker } from '@infrastructure/shared/workers/BullWorker';
 import { EmailService } from '@domain/shared/EmailService';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 
@@ -25,6 +25,7 @@ export class SoldBookEmailWorker extends BullWorker<SoldBookEmailParams> {
 
     await this.emailService.send({
       email: user.email,
+      subject: 'Sold book notification',
       message: `The book ${job.data.title} has been sold`,
     });
   };

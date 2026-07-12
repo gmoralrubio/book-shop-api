@@ -32,6 +32,8 @@ class EnvironmentService {
         throw new Error(
           'Error loading environment variables: ' + JSON.stringify(error)
         );
+      } else {
+        throw new Error(`Unknown error: ${error}`);
       }
     }
   }

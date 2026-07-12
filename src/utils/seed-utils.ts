@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { faker } from '@faker-js/faker';
-import prismaClient from '@infraestructure/shared/prisma-client';
+import prismaClient from '@infrastructure/shared/prisma-client';
 
 export async function seedDB() {
   const ids = await seedUsers();
@@ -10,7 +10,7 @@ async function seedUsers() {
   const salt = await bcrypt.genSalt(10);
 
   const [userA, userB] = await Promise.all([
-    await prismaClient.user.upsert({
+    prismaClient.user.upsert({
       where: { email: 'john.doe@email.com' },
       update: {},
       create: {
@@ -18,7 +18,7 @@ async function seedUsers() {
         password: await bcrypt.hash('validPassword123!', salt),
       },
     }),
-    await prismaClient.user.upsert({
+    prismaClient.user.upsert({
       where: { email: 'admin@email.com' },
       update: {},
       create: {

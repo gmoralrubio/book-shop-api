@@ -1,11 +1,11 @@
 import api from './api';
-import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
-import { SoldBookEmailWorker } from '@infraestructure/shared/workers/SoldBookEmailWorker';
-import { NodemailerEmailService } from '@infraestructure/shared/services/NodemailerEmailService';
-import { PrismaUserRepository } from '@infraestructure/user/repositories/PrismaUserRepository';
-import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
-import { ReviewPriceEmailWorker } from '@infraestructure/shared/workers/ReviewPriceEmailWorker';
-import { BullQueueService } from '@infraestructure/shared/services/BullQueueService';
+import { environmentService } from '@infrastructure/shared/services/EnvironmentService';
+import { SoldBookEmailWorker } from '@infrastructure/shared/workers/SoldBookEmailWorker';
+import { NodemailerEmailService } from '@infrastructure/shared/services/NodemailerEmailService';
+import { PrismaUserRepository } from '@infrastructure/user/repositories/PrismaUserRepository';
+import { PrismaBookRepository } from '@infrastructure/book/repositories/PrismaBookRepository';
+import { ReviewPriceEmailWorker } from '@infrastructure/shared/workers/ReviewPriceEmailWorker';
+import { BullQueueService } from '@infrastructure/shared/services/BullQueueService';
 
 environmentService.load();
 

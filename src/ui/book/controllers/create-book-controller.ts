@@ -1,5 +1,5 @@
 import { CreateBookUseCase } from '@domain/book/use-cases/create-book';
-import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { PrismaBookRepository } from '@infrastructure/book/repositories/PrismaBookRepository';
 import { createBookValidationSchema } from '@ui/book/validators/book-validator';
 import { NextFunction, Request, Response } from 'express';
 

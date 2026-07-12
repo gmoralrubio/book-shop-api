@@ -1,5 +1,5 @@
 import { QueueService, SoldBookEmailParams } from '@domain/shared/QueueService';
-import { environmentService } from '@infraestructure/shared/services/EnvironmentService';
+import { environmentService } from '@infrastructure/shared/services/EnvironmentService';
 import { Queue } from 'bullmq';
 
 export class BullQueueService implements QueueService {

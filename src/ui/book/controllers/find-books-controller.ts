@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { PrismaBookRepository } from '@infrastructure/book/repositories/PrismaBookRepository';
 import { FindBooksUseCase } from '@domain/book/use-cases/find-books';
 import { findBookValidationSchema } from '@ui/book/validators/book-validator';
 import { buildPaginatedResponse } from '@ui/shared/presenters/paginated-response';

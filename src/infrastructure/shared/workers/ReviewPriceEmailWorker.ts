@@ -1,5 +1,5 @@
 import { ReviewPriceEmailParams } from '@domain/shared/QueueService';
-import { BullWorker } from '@infraestructure/shared/workers/BullWorker';
+import { BullWorker } from '@infrastructure/shared/workers/BullWorker';
 import { EmailService } from '@domain/shared/EmailService';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { BookRepository } from '@domain/book/repositories/BookRepository';

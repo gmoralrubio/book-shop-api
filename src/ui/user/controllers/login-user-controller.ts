@@ -1,6 +1,6 @@
 import { LoginUserUseCase } from '@domain/user/use-cases/login-user';
-import { SecurityServiceImplementation } from '@infraestructure/user/services/SecurityServiceImplementation';
-import { PrismaUserRepository } from '@infraestructure/user/repositories/PrismaUserRepository';
+import { SecurityServiceImplementation } from '@infrastructure/user/services/SecurityServiceImplementation';
+import { PrismaUserRepository } from '@infrastructure/user/repositories/PrismaUserRepository';
 import { NextFunction, Request, Response } from 'express';
 import { userValidationSchema } from '@ui/user/validators/user-validator';
 

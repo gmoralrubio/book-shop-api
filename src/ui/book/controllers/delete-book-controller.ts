@@ -1,5 +1,5 @@
 import { DeleteBookUseCase } from '@domain/book/use-cases/delete-book';
-import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { PrismaBookRepository } from '@infrastructure/book/repositories/PrismaBookRepository';
 import { idParamValidationSchema } from '@ui/book/validators/book-validator';
 import { Request, Response, NextFunction } from 'express';
 export const deleteBookController = async (

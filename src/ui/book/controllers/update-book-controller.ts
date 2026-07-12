@@ -1,5 +1,5 @@
 import { UpdateBookUseCase } from '@domain/book/use-cases/update-book';
-import { PrismaBookRepository } from '@infraestructure/book/repositories/PrismaBookRepository';
+import { PrismaBookRepository } from '@infrastructure/book/repositories/PrismaBookRepository';
 import {
   idParamValidationSchema,
   updateBookValidationSchema,

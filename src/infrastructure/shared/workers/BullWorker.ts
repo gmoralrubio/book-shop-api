@@ -1,5 +1,5 @@
 import { Job, Worker } from 'bullmq';
-import { BullQueueService } from '@infraestructure/shared/services/BullQueueService';
+import { BullQueueService } from '@infrastructure/shared/services/BullQueueService';
 
 export abstract class BullWorker<TJobData> {
   readonly worker: Worker<TJobData>;

@@ -15,7 +15,7 @@
     "paths": {
       "@*": ["./src/*"],
       "@domain/*": ["./src/domain/*"],
-      "@infraestructure/*": ["./src/infraestructure/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
       "@ui/*": ["./src/ui/*"]
     },
     "allowJs": true,
