@@ -17,9 +17,7 @@ export class CreateBookUseCase {
   }
 
   async execute(input: CreateBookUseCaseInput): Promise<Book> {
-    // Business rules
-
-    const book = this.bookRepository.create(input);
+    const book = await this.bookRepository.create(input);
     return book;
   }
 }
