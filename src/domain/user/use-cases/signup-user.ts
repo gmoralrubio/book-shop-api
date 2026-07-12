@@ -1,7 +1,7 @@
 import { BusinessConflictError } from '@domain/errors/BusinessConflictError';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
 import { SecurityService } from '@domain/user/services/SecurityService';
-import { User } from '@prisma/client';
+import { User } from '@domain/user/User';
 
 export interface SignupUserUseCaseInput {
   email: string;
@@ -25,7 +25,7 @@ export class SignupUserUseCase {
       email: input.email,
     });
     if (existingUser) {
-      throw new BusinessConflictError('An user with same email already exists');
+      throw new BusinessConflictError('A user with same email already exists');
     }
 
     const hashedPassword = await this.securityService.hash(input.password);

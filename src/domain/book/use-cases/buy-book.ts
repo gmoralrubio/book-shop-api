@@ -21,7 +21,7 @@ export class BuyBookUseCase {
     const book = await this.bookRepository.findById(input.id);
 
     if (!book) {
-      throw new EntityNotFoundError('book', String(input.id));
+      throw new EntityNotFoundError('Book', String(input.id));
     }
 
     if (book.status === 'SOLD') {

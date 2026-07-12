@@ -23,7 +23,7 @@ export class DeleteBookUseCase {
     }
 
     if (book.ownerId !== input.userId) {
-      throw new ForbiddenOperationError('User does not owns the product');
+      throw new ForbiddenOperationError('User does not own the product');
     }
 
     if (book.status === 'SOLD') {
