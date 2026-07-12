@@ -10,7 +10,7 @@ export interface BookRepository {
   delete(id: number): Promise<void>;
   findMany(criteria: FindBooksUseCaseInput): Promise<FindBooksResponse>;
   findById(id: number): Promise<Book | null>;
-  findPublishedBefore(date: Date): Promise<Book[] | null>;
+  findPublishedBefore(date: Date): Promise<Book[]>;
   toggleStatusTo(status: BookStatus, id: number): Promise<void>;
   setSoldAt(date: Date, id: number): Promise<void>;
 }

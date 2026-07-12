@@ -91,15 +91,12 @@ export class PrismaBookRepository implements BookRepository {
     };
   }
 
-  async findPublishedBefore(date: Date): Promise<Book[] | null> {
-    const primaBooks = await this.prisma.book.findMany({
+  async findPublishedBefore(date: Date): Promise<Book[]> {
+    const prismaBooks = await this.prisma.book.findMany({
       where: { status: 'PUBLISHED', createdAt: { lt: date } },
     });
-    if (!primaBooks) {
-      return null;
-    } else {
-      return primaBooks.map((book) => this.restore(book));
-    }
+
+    return prismaBooks.map((book) => this.restore(book));
   }
 
   async findById(id: number): Promise<Book | null> {
