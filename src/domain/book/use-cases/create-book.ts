@@ -1,5 +1,5 @@
+import { Book } from '@domain/book/Book';
 import { BookRepository } from '@domain/book/repositories/BookRepository';
-import { Book } from '@prisma/client';
 
 export interface CreateBookUseCaseInput {
   ownerId: number;
