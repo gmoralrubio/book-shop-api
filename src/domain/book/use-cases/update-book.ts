@@ -30,7 +30,7 @@ export class UpdateBookUseCase {
       throw new ForbiddenOperationError('User must own the book');
     }
 
-    const updatedBook = this.bookRepository.update(input);
+    const updatedBook = await this.bookRepository.update(input);
     return updatedBook;
   }
 }
