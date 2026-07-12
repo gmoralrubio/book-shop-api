@@ -41,7 +41,7 @@ export class BuyBookUseCase {
 
     const soldBook = await this.bookRepository.findById(input.id);
 
-    this.queueService.sendSoldBookEmail({
+    await this.queueService.sendSoldBookEmail({
       ownerId: book.ownerId,
       title: book.title,
     });
