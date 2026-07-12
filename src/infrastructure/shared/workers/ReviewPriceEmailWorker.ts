@@ -1,33 +1,47 @@
-import { ReviewPriceEmailParams } from '@domain/shared/QueueService';
 import { BullWorker } from '@infrastructure/shared/workers/BullWorker';
+import { BookRepository } from '@domain/book/repositories/BookRepository';
 import { EmailService } from '@domain/shared/EmailService';
 import { UserRepository } from '@domain/user/repositories/UserRepository';
-import { BookRepository } from '@domain/book/repositories/BookRepository';
-import { ReviewPriceUseCase } from '@domain/book/use-cases/review-price';
 
-export class ReviewPriceEmailWorker extends BullWorker<ReviewPriceEmailParams> {
-  private readonly emailService: EmailService;
-  private readonly userRepository: UserRepository;
+export class ReviewPriceEmailWorker extends BullWorker<void> {
   private readonly bookRepository: BookRepository;
+  private readonly userRepository: UserRepository;
+  private readonly emailService: EmailService;
 
   constructor(
-    emailService: EmailService,
+    bookRepository: BookRepository,
     userRepository: UserRepository,
-    bookRepository: BookRepository
+    emailService: EmailService
   ) {
     super('price-review-email-cron');
-    this.emailService = emailService;
-    this.userRepository = userRepository;
     this.bookRepository = bookRepository;
+    this.userRepository = userRepository;
+    this.emailService = emailService;
   }
 
   processJob = async () => {
-    // Delega a use case
-    const reviewPriceUseCase = new ReviewPriceUseCase(
-      this.userRepository,
-      this.bookRepository,
-      this.emailService
-    );
-    await reviewPriceUseCase.execute();
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const books = await this.bookRepository.findPublishedBefore(sevenDaysAgo);
+
+    if (!books) return;
+
+    for (const book of books) {
+      try {
+        const owner = await this.userRepository.findBy({ id: book.ownerId });
+
+        if (!owner) {
+          console.error(`Owner not found for book ${book.id}`);
+          continue;
+        }
+
+        await this.emailService.send({
+          email: owner.email,
+          subject: `Price review for "${book.title}"`,
+          message: `The book "${book.title}" (id: ${book.id}) has been published for over 7 days. Consider a price reduction.`,
+        });
+      } catch (error) {
+        console.error(`Error sending review email for book ${book.id}: ${error}`);
+      }
+    }
   };
 }

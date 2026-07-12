@@ -18,9 +18,9 @@ api.listen(PORT, () => {
 const emailService = new NodemailerEmailService();
 const userRepository = new PrismaUserRepository();
 const bookRepository = new PrismaBookRepository();
+const bullQueueService = new BullQueueService();
 
 new SoldBookEmailWorker(emailService, userRepository);
-new ReviewPriceEmailWorker(emailService, userRepository, bookRepository);
+new ReviewPriceEmailWorker(bookRepository, userRepository, emailService);
 
-const bullQueueService = new BullQueueService();
 bullQueueService.priceReviewCron();
