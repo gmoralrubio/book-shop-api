@@ -1,0 +1,274 @@
+{
+  "info": {
+    "_postman_id": "0b5ae9a4-4a9c-4ec2-9826-20014bdd0ac8",
+    "name": "Book Shop API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56094062"
+  },
+  "item": [
+    {
+      "name": "Signup user",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"valid.email@email.com\",\n    \"password\": \"myPassword123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/authentication/signup",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "authentication",
+            "signup"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login user",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"valid.email@email.com\",\n    \"password\": \"validPassword123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/authentication/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "authentication",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Test title\",\n    \"description\": \"Test description, test description test description test description\",\n    \"price\": 20,\n    \"author\": \"Test author\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update book",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Test title updated\",\n    \"description\": \"Test description updated, test description test description test description\",\n    \"price\": 22,\n    \"author\": \"Test author\",\n    \"soldAt\": \"2026-07-01T18:58:21.930Z\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/books/:id",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete book",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/books/:id",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buy book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/books/:id/buy",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books",
+            ":id",
+            "buy"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Find user books",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/me/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "me",
+            "books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Find books",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/books",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "books"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
