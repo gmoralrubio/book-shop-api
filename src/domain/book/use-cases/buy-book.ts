@@ -47,7 +47,5 @@ export class BuyBookUseCase {
     });
 
     return soldBook;
-
-    // TODO: ENVIO EMAIL AL VENDEDOR NOTIFICANDO VENTA
   }
 }
