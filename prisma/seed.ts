@@ -1,5 +1,5 @@
 import { seedDB } from '../src/utils/seed-utils';
-import prismaClient from '../src/infraestructure/shared/prisma-client';
+import prismaClient from '../src/infrastructure/shared/prisma-client';
 
 seedDB()
   .then(async () => {
