@@ -10,7 +10,7 @@ services:
       - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: always
+    restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
@@ -22,14 +22,14 @@ services:
       - '8081:80'
     depends_on:
       - postgres
-    restart: always
+    restart: unless-stopped
 
   redis:
     image: redis:7
     container_name: bookshop_redis
     ports:
       - '6379:6379'
-    restart: always
+    restart: unless-stopped
 
   maildev:
     image: maildev/maildev
@@ -37,7 +37,7 @@ services:
     ports:
       - '1080:1080'
       - '1025:1025'
-    restart: always
+    restart: unless-stopped
 
 volumes:
   postgres_data:
