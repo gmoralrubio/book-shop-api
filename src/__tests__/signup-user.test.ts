@@ -99,7 +99,7 @@ describe('POST /authentication/signup', () => {
 
     expect(response2.status).toEqual(409);
     expect(response2.body).toEqual({
-      error: 'An user with same email already exists',
+      error: 'A user with same email already exists',
     });
   });
 });
