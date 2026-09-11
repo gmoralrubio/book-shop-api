@@ -58,7 +58,7 @@ describe('POST /books/:id/buy', () => {
 
     expect(response.status).toEqual(404);
     expect(response.body.error).toEqual(
-      `Entity book not found with id ${nonExistingId}`
+      `Entity Book not found with id ${nonExistingId}`
     );
   });
 
