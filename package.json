@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand",
     "prisma:sync": "npx prisma migrate dev",
-    "prisma:seed": "npx prisma db seed",
+    "prisma:seed": "tsx prisma/seed.ts",
     "prisma:reset": "npx prisma migrate reset"
   },
   "keywords": [],
